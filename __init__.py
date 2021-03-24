@@ -1,6 +1,6 @@
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
-import pickle5 as pickle
+import pickle
 import pandas as pd
 import re
 import subprocess
