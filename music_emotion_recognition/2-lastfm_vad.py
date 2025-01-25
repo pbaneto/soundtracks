@@ -50,7 +50,7 @@ def vad_each_soundtrack_anew(item):
 
     def check_anew(item_mood):
         aux_name = anew.loc[anew["Description"] == item_mood["name"].lower(), :]
-        if aux_name.empty == False:
+        if not aux_name.empty:
             aux = aux_name.to_numpy()
 
             weighted_mood[aux[0][0]] = item_mood["count"]
@@ -60,7 +60,6 @@ def vad_each_soundtrack_anew(item):
             dominance.append(aux[0][3] * item_mood["count"])
 
             weights.append(item_mood["count"])
-
 
     tags.apply(lambda row: check_anew(row), axis=1)
     print(item["id"], item["name"], item["artist"]["name"])
@@ -77,7 +76,7 @@ def vad_each_soundtrack_anew(item):
 
 
 def vad_each_soundtrack_nrc(item):
-    if sountracks9000.loc[sountracks9000["id"] == item["id"]].empty == False:
+    if not sountracks9000.loc[sountracks9000["id"] == item["id"]].empty:
         response = lastfm_get(
             {
                 "method": "track.gettoptags",
@@ -90,7 +89,6 @@ def vad_each_soundtrack_nrc(item):
         tags = pd.DataFrame(response.json()["toptags"]["tag"])
 
         # Check which tags are moods in NRC
-        # Array with values of each mood to compute the mean afterwards, multiply by their weights.
         valence = []
         weights = []
         arousal = []
@@ -101,7 +99,7 @@ def vad_each_soundtrack_nrc(item):
 
             aux_name = nrc.loc[nrc["Word"] == item_mood["name"].lower(), :]
 
-            if aux_name.empty == False:
+            if not aux_name.empty:
                 aux = aux_name.to_numpy()
 
                 weighted_mood[aux[0][0]] = item_mood["count"]
