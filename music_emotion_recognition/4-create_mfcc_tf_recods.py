@@ -8,13 +8,12 @@ import tensorflow as tf
 from timeit import default_timer as timer
 
 import warnings
-warnings.filterwarnings("ignore")
 
+warnings.filterwarnings("ignore")
 
 
 dir = os.getcwd()
 sountracks9000 = pickle.load(open(os.path.join(dir, "sountracks9000.pkl"), "rb"))
-
 
 
 def song_to_example(
@@ -62,7 +61,6 @@ def write_single_tfrecord(filename, example):
         writer.write(example)
 
 
-
 def get_mfcc(item, dataset, index):
     # Takes each frame and a calculates MFCC
 
@@ -100,7 +98,7 @@ def get_mfcc(item, dataset, index):
 
 
 def create_tfrecords(batch_size=200, start_index=0):
-    ''' Create tfrecords by songs batches. Default 200 '''
+    """Create tfrecords by songs batches. Default 200"""
 
     list_df = [
         sountracks9000[i : i + batch_size]
@@ -116,4 +114,3 @@ def create_tfrecords(batch_size=200, start_index=0):
 
 
 features_dataset = create_tfrecords()
-

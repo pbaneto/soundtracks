@@ -17,13 +17,9 @@ def parse_elem(element):
     }
     example_message = tf.io.parse_single_example(element, parse_dict)
     mfcc = example_message["mfcc"]
-    id = example_message["id"]
-    track = example_message["track"]
-    artist = example_message["artist"]
-    duration = example_message["duration"]
     val = example_message["valence_tags"]
-    aro = example_message["arousal_tags"]
-    dom = example_message["dominance_tags"]
+    # aro = example_message["arousal_tags"]
+    # dom = example_message["dominance_tags"]
 
     feature = tf.io.parse_tensor(mfcc, out_type=tf.int32)
 
@@ -86,8 +82,7 @@ def get_cnn():
     return model
 
 
-
-if __name__ ==  '__main__':
+if __name__ == "__main__":
 
     # Load tf record dataset
     dir = os.getcwd()
@@ -95,10 +90,8 @@ if __name__ ==  '__main__':
 
     batch_size = 32
     tfr_dataset = get_dataset(
-      filename=filenames,
-      set_type="train",
-      batch_size=batch_size)
-
+        filename=filenames, set_type="train", batch_size=batch_size
+    )
 
     # Train the model
     model = get_cnn()

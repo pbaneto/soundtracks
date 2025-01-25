@@ -8,7 +8,6 @@ import numpy as np
 from utils import lastfm_get
 
 
-
 os.environ["SPOTIPY_CLIENT_ID"] = os.getenv("SPOTIPY_CLIENT_ID")
 os.environ["SPOTIPY_CLIENT_SECRET"] = os.getenv("SPOTIPY_CLIENT_SECRET")
 os.environ["SPOTIPY_REDIRECT_URI"] = "http://localhost:8888/"
@@ -42,9 +41,6 @@ def vad_each_soundtrack_anew(item):
     # Gets 100 tags from each sountrack
     tags = pd.DataFrame(response.json()["toptags"]["tag"])
 
-    # Check which tags are moods in ANEW
-    # Array with values of each mood to compute the mean afterwards, multiply by their weights.
-
     valence = []
     weights = []
     arousal = []
@@ -53,9 +49,7 @@ def vad_each_soundtrack_anew(item):
     weighted_mood = {}
 
     def check_anew(item_mood):
-
         aux_name = anew.loc[anew["Description"] == item_mood["name"].lower(), :]
-
         if aux_name.empty == False:
             aux = aux_name.to_numpy()
 
@@ -64,7 +58,9 @@ def vad_each_soundtrack_anew(item):
             valence.append(aux[0][1] * item_mood["count"])
             arousal.append(aux[0][2] * item_mood["count"])
             dominance.append(aux[0][3] * item_mood["count"])
+
             weights.append(item_mood["count"])
+
 
     tags.apply(lambda row: check_anew(row), axis=1)
     print(item["id"], item["name"], item["artist"]["name"])
@@ -82,7 +78,6 @@ def vad_each_soundtrack_anew(item):
 
 def vad_each_soundtrack_nrc(item):
     if sountracks9000.loc[sountracks9000["id"] == item["id"]].empty == False:
-
         response = lastfm_get(
             {
                 "method": "track.gettoptags",
