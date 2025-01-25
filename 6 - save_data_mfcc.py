@@ -1,11 +1,10 @@
-''' 
-6.
-Extract MFCC and save 13 in tfrecords.
-'''
+# 6. Extract MFCC and save 13 in tfrecords.
 
-from __init__ import *
+import os
+import pickle
 import librosa
-import matplotlib.pyplot as plt
+import tensorflow as tf
+
 from timeit import default_timer as timer
 
 import warnings
@@ -32,7 +31,7 @@ def song_to_example(id, track, artist, duration, valence_tags, arousal_tags, dom
   duration = tf.io.serialize_tensor(duration).numpy()
   valence_tags = tf.io.serialize_tensor(valence_tags).numpy()
   arousal_tags = tf.io.serialize_tensor(arousal_tags).numpy()
-  dominance_tags = tf.io.serialize_tensor(dominance_tags).numpy()  
+  dominance_tags = tf.io.serialize_tensor(dominance_tags).numpy()
   mfcc = tf.io.serialize_tensor(mfcc).numpy()
 
   return tf.train.Example(features=tf.train.Features(feature={
@@ -55,7 +54,7 @@ def write_single_tfrecord(filename, example):
 
 
 def get_mfcc(item, dataset, index):
-  #Takes each frame and a calculates MFCC
+  # Takes each frame and a calculates MFCC
 
   audio_path = os.path.join(dir, 'datasets/soundtracks1000/') + str(item['id']) + '.mp3'
 
@@ -103,8 +102,6 @@ def create_tfrecords(batch_size=200, start_index=0):
 # raw_dataset = tf.data.TFRecordDataset(filenames)
 
 # for raw_record in raw_dataset.take(1):
-#   example = tf.train.Example() 
+#   example = tf.train.Example()
 #   example.ParseFromString(raw_record.numpy())
 #   print(example)
-
-    

@@ -1,0 +1,37 @@
+# Ignore node_modules folder
+node_modules/
+
+# Ignore build/ or dist/ folders
+build/
+dist/
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# Ignore environment variable files
+.env
+.env.local
+env
+
+# Ignore compiled code
+*.out
+*.class
+*.pyc
+
+# Ignore editor-specific files
+*.swp
+.vscode/
+.idea/
+
+# Ignore coverage reports
+coverage/
+.nyc_output/
+
+# Ignore dependency directories for Python
+__pycache__/

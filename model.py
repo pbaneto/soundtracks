@@ -1,4 +1,3 @@
-from save_data_mfcc import *
 from load_data import *
 
 # Reading TFRecord file
@@ -13,19 +12,19 @@ for sample in tfr_dataset.take(1):
 
 def get_cnn():
   model = tf.keras.Sequential([
-      
+
     tf.keras.layers.Conv2D(kernel_size=3, filters=16, padding='same', activation='relu', input_shape=[28,28, 1]),
     tf.keras.layers.Conv2D(kernel_size=3, filters=32, padding='same', activation='relu'),
     tf.keras.layers.MaxPooling2D(pool_size=2),
-    
+
     tf.keras.layers.Conv2D(kernel_size=3, filters=64, padding='same', activation='relu'),
     tf.keras.layers.MaxPooling2D(pool_size=2),
-    
+
     tf.keras.layers.Conv2D(kernel_size=3, filters=128, padding='same', activation='relu'),
     tf.keras.layers.MaxPooling2D(pool_size=2),
-    
+
     tf.keras.layers.Conv2D(kernel_size=3, filters=256, padding='same', activation='relu'),
-    
+
     tf.keras.layers.GlobalAveragePooling2D(),
     tf.keras.layers.Dense(10,'softmax')
   ])
